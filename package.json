@@ -1,0 +1,28 @@
+{
+  "name": "rent-receipt-kit",
+  "version": "1.0.0",
+  "description": "Indian rent receipts from one tenancy file: email, PDF receipt, HRA statement, WhatsApp image and tenant page, built with Hyper Elements",
+  "scripts": {
+    "build": "tsx scripts/build.tsx",
+    "test": "tsx --test tests/rules.test.ts",
+    "typecheck": "tsc"
+  },
+  "author": "Ankith M",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@hyper-elements/cli": "^0.2.10",
+    "@hyper-elements/react": "^0.4.8",
+    "@react-pdf/renderer": "^4.9.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "satori": "^0.33.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6"
+  }
+}
