@@ -19,7 +19,7 @@ export default function ReceiptPdf({ t = defaultTenancy, month = "2026-11" }: { 
             flex: "none",
             padding: [10, 14, 10, 4],
             gap: 8,
-            border: { right: { width: 1, style: "dashed", color: token("colors.muted") } },
+            border: { right: { width: 1, style: "dashed", color: token("colors.print") } },
           }}
         >
           <Text style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1 }}>COUNTERFOIL</Text>
@@ -34,7 +34,7 @@ export default function ReceiptPdf({ t = defaultTenancy, month = "2026-11" }: { 
           <Text style={{ apply: ["label"], fontSize: 10 }}>{p.mode}</Text>
         </Column>
         <Column style={{ flex: 1, padding: [0, 0, 0, 16], gap: 10 }}>
-          <ReceiptSlip t={t} p={p} compact />
+          <ReceiptSlip t={t} p={p} to="print" width={602} />
           <Text style={{ apply: ["label"], fontSize: 10, lineHeight: 1.4 }}>
             Rent receipt for House Rent Allowance under section 10(13A) of the Income-tax Act. Keep it with your tax papers until the
             assessment for {fyLabel(t)} is closed.

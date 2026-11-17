@@ -26,14 +26,14 @@ export default function ReceiptEmail({ t = defaultTenancy, month = "2026-11" }: 
         </Text>
       </Section>
       <Section style={{ padding: [12, 24], gap: 0 }}>
-        <ReceiptSlip t={t} p={p} web />
+        <ReceiptSlip t={t} p={p} to="email" />
       </Section>
       <Section style={{ padding: [12, 24, 8, 24], gap: 14 }}>
         <Row style={{ gap: 12 }}>
           <Button href={`${t.publishUrl}/${file}`}>Download the receipt</Button>
           <Button
             href={t.publishUrl}
-            style={{ backgroundColor: token("colors.paper"), color: token("colors.ink"), border: "1px solid " + "#2340A0" }}
+            style={{ backgroundColor: "#FFFFFF", color: token("colors.print"), border: "1px solid #9E1C33" }}
           >
             See the whole year
           </Button>

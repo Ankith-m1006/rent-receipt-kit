@@ -22,7 +22,7 @@ The kit follows those rules for you. The landlord types the tenancy once and add
 | HRA statement PDF (A4) | `Document` → `renderPdf()` | One document for payroll: every month, total, PAN, declaration |
 | Tenant page | `Page` → `render()` | The year at a glance, every receipt one tap away |
 
-The design copies a receipt book from the stationery shop. Labels are printed in grey-black and the landlord's entries are in blue ballpoint (Kalam). The serial number is red, and the amount sits in a box written `₹18,500/-`, the way Indian receipts write it.
+The design is a page torn from a stationery-shop receipt book: pale pink carbon paper with a perforated edge, the landlord's name printed in a maroon header band, a red serial number, ruled lines filled in with blue ballpoint (Kalam), the amount boxed as `₹18,500/-` the way Indian receipts write it, and a purple rubber PAID stamp. On the web page and the WhatsApp image the page lies on a dark desk.
 
 ## The rules it gets right
 

@@ -4,7 +4,9 @@ import { ReceiptSlip } from "../slip";
 import { annualRent, dateName, fyLabel, monthName, paid, receiptNo, rupees, totalPaid } from "../rules";
 import { tenancy as defaultTenancy, type Tenancy } from "../tenancy-api";
 
-/** The tenant's page for the year: what's paid, what's next, and every receipt one tap away. */
+const desk = { colors: { background: "#2A2D36", foreground: "#FFFFFF" } };
+
+/** The tenant's page for the year: the receipt book open on the desk, what's paid, what's next. */
 export default function TenantPage({ t = defaultTenancy }: { t?: Tenancy }) {
   const done = paid(t);
   const latest = done[done.length - 1];
@@ -12,77 +14,76 @@ export default function TenantPage({ t = defaultTenancy }: { t?: Tenancy }) {
   return (
     <Page
       theme={receiptBook}
-      width={880}
+      width={920}
       fonts={webFonts}
       title={`Rent ${fyLabel(t)}: ${t.tenant.name}`}
       description={`Rent receipts for ${t.property.line2}, ${t.property.city}, ${fyLabel(t)}.`}
-      style={{ gap: 0 }}
+      style={{ gap: 0, backgroundColor: "#2A2D36" }}
     >
-      <Section style={{ padding: [48, 24, 20, 24], gap: 8, mobile: { padding: [28, 16, 12, 16] } }}>
-        <Text style={{ apply: ["label"] }}>
-          {t.property.line1}, {t.property.line2}, {t.property.city}
+      <Section tokens={desk} style={{ padding: [56, 24, 28, 24], gap: 10, mobile: { padding: [32, 16, 18, 16] } }}>
+        <Text style={{ fontSize: 14, color: "#B9BCC6" }}>
+          {t.tenant.name} · {t.property.line2}, {t.property.city} · {fyLabel(t)}
         </Text>
-        <Heading level={1} style={{ fontSize: 40, lineHeight: 1.15, mobile: { fontSize: 30 } }}>
+        <Heading level={1} style={{ fontSize: 46, lineHeight: 1.1, color: "#FFFFFF", mobile: { fontSize: 32 } }}>
           {rupees(totalPaid(t))} paid of {rupees(annualRent(t))}
         </Heading>
-        <Text style={{ fontSize: 17 }}>
-          {t.tenant.name}'s rent for {fyLabel(t)}. {done.length} of 12 months paid
-          {next ? `; ${monthName(next.month)} is due by the 5th.` : "; the year is complete."}
+        <Text style={{ fontSize: 17, color: "#D8DAE0" }}>
+          {done.length} of 12 months paid{next ? `. ${monthName(next.month)} is due by the 5th.` : ". The year is complete."}
         </Text>
       </Section>
 
-      <Section style={{ padding: [12, 24], gap: 10, mobile: { padding: [8, 16] } }}>
+      <Section tokens={desk} style={{ padding: [8, 24, 28, 24], mobile: { padding: [6, 16, 20, 16] } }}>
         <Grid columns={6} style={{ gap: 8, rowGap: 8 }} stackOnMobile={false}>
           {t.payments.map((p) => (
             <Column
               key={p.month}
               style={{
                 padding: [10, 8],
-                gap: 0,
-                borderRadius: 4,
-                backgroundColor: p.paidOn ? token("colors.paper") : token("colors.background"),
-                border: p.paidOn ? "1px solid #C7D0E2" : { width: 1, style: "dashed", color: token("colors.muted") },
+                gap: 2,
+                borderRadius: 3,
+                backgroundColor: p.paidOn ? token("colors.paper") : "#2A2D36",
+                border: p.paidOn ? { width: 1, style: "solid", color: token("colors.paper") } : { width: 1, style: "dashed", color: "#5D6170" },
               }}
             >
-              <Text style={{ fontSize: 13, fontWeight: 600, color: p.paidOn ? token("colors.foreground") : token("colors.muted") }}>
-                {monthName(p.month).slice(0, 3)}
-              </Text>
+              <Text style={{ fontSize: 14, fontWeight: 700, color: p.paidOn ? token("colors.print") : "#8D91A0" }}>{monthName(p.month).slice(0, 3)}</Text>
               {p.paidOn ? (
-                <Text style={{ fontSize: 15 }}>
-                  <Link href={`receipts/receipt-${p.month}.pdf`} style={{ fontFamily: token("fonts.hand"), color: token("colors.ink"), textDecoration: "none" }}>
-                    paid
+                <Text style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2 }}>
+                  <Link href={`receipts/receipt-${p.month}.pdf`} style={{ color: token("colors.stamp"), textDecoration: "none" }}>
+                    PAID
                   </Link>
                 </Text>
               ) : (
-                <Text style={{ fontSize: 13, color: token("colors.muted") }}>due</Text>
+                <Text style={{ fontSize: 11, letterSpacing: 1, color: "#8D91A0" }}>due</Text>
               )}
             </Column>
           ))}
         </Grid>
       </Section>
 
-      <Section style={{ padding: [20, 24, 12, 24], gap: 14, mobile: { padding: [16, 16, 8, 16] } }}>
-        <Row style={{ gap: 28, alignItems: "start" }}>
-          <Column style={{ flex: 1.4, gap: 10 }}>
-            <Heading level={2}>Latest receipt, {monthName(latest.month)}</Heading>
-            <ReceiptSlip t={t} p={latest} web />
+      <Section tokens={desk} style={{ padding: [12, 24, 40, 24], gap: 14, mobile: { padding: [8, 16, 28, 16] } }}>
+        <Row style={{ gap: 32, alignItems: "start" }}>
+          <Column style={{ flex: 1.5, gap: 12 }}>
+            <Text style={{ fontSize: 14, color: "#B9BCC6" }}>Latest receipt</Text>
+            <ReceiptSlip t={t} p={latest} to="page" />
           </Column>
-          <Column style={{ flex: 1, gap: 12 }}>
-            <Heading level={2}>For your employer</Heading>
-            <Text style={{ fontSize: 14 }}>
-              Payroll teams ask for rent receipts for the whole financial year, with the landlord's PAN when the rent is over ₹1,00,000. This
-              statement has both.
+          <Column style={{ flex: 1, gap: 14, padding: [30, 0, 0, 0], mobile: { padding: [8, 0, 0, 0] } }}>
+            <Heading level={2} style={{ color: "#FFFFFF" }}>For your employer</Heading>
+            <Text style={{ fontSize: 15, color: "#D8DAE0" }}>
+              Payroll asks for a whole financial year of rent receipts, with the landlord's PAN once the rent is over ₹1,00,000. This
+              statement has both, on one page.
             </Text>
-            <Button href="statement.pdf">Download the {fyLabel(t)} statement</Button>
-            <Text style={{ apply: ["label"] }}>
+            <Button href="statement.pdf" style={{ backgroundColor: token("colors.paper"), color: token("colors.print"), hover: { backgroundColor: "#FFFFFF" } }}>
+              Download the {fyLabel(t)} statement
+            </Button>
+            <Text style={{ fontSize: 13, color: "#8D91A0" }}>
               Last paid {dateName(latest.paidOn!)} · Receipt {receiptNo(t, latest)}
             </Text>
           </Column>
         </Row>
       </Section>
 
-      <Section style={{ padding: [24, 24, 48, 24], gap: 4, mobile: { padding: [20, 16, 32, 16] } }}>
-        <Text style={{ apply: ["label"] }}>
+      <Section tokens={desk} style={{ padding: [20, 24, 44, 24], gap: 4, border: { top: { width: 1, style: "solid", color: "#3B3F4A" } }, mobile: { padding: [18, 16, 30, 16] } }}>
+        <Text style={{ fontSize: 13, color: "#8D91A0" }}>
           Landlord: {t.landlord.name} · {t.landlord.phone} · UPI {t.landlord.upiId}
         </Text>
       </Section>

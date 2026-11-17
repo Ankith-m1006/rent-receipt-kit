@@ -1,6 +1,6 @@
-import { Column, Document, Heading, PageFooter, PageNumber, Row, Span, Table, TableCell, TableRow, Text, token } from "@hyper-elements/react";
+import { Column, Document, PageFooter, PageNumber, Row, Span, Table, TableCell, TableRow, Text, token } from "@hyper-elements/react";
 import { receiptBook } from "../theme";
-import { signature } from "../slip";
+import { PaidStamp, signature } from "../slip";
 import { annualRent, dateName, fyLabel, inWords, monthName, paid, panRequired, receiptNo, rupees, stampRequired, totalPaid } from "../rules";
 import { tenancy as defaultTenancy, type Tenancy } from "../tenancy-api";
 
@@ -15,34 +15,34 @@ export default function AnnualStatement({ t = defaultTenancy }: { t?: Tenancy })
           Rent statement {fyLabel(t)} · {t.tenant.name} · page <PageNumber /> of <PageNumber total />
         </Text>
       </PageFooter>
-      <Row style={{ alignItems: "end", justifyContent: "space-between" }} stackOnMobile={false}>
-        <Column style={{ gap: 2 }}>
-          <Text style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2 }}>RENT STATEMENT FOR HRA</Text>
-          <Heading level={1}>{fyLabel(t)}</Heading>
-          <Text style={{ apply: ["label"] }}>April {t.financialYear.start} to March {t.financialYear.start + 1}</Text>
+      <Row style={{ backgroundColor: token("colors.print"), padding: [18, 22], alignItems: "end", gap: 16 }} stackOnMobile={false}>
+        <Column style={{ flex: 1, gap: 2 }}>
+          <Text style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, color: "#F6D7DC" }}>RENT STATEMENT FOR HRA</Text>
+          <Text style={{ fontSize: 30, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.15 }}>{fyLabel(t)}</Text>
+          <Text style={{ fontSize: 13, color: "#F6D7DC" }}>April {t.financialYear.start} to March {t.financialYear.start + 1}</Text>
         </Column>
-        <Text style={{ fontSize: 13, fontWeight: 600, color: token("colors.serial") }}>{months} receipts</Text>
+        <PaidStamp day={`${months} months`} light />
       </Row>
 
       <Row style={{ gap: 16 }} stackOnMobile={false}>
-        <Column style={{ flex: 1, gap: 2, backgroundColor: token("colors.tint"), padding: [12, 14], borderRadius: 4 }}>
+        <Column style={{ flex: 1, gap: 2, backgroundColor: token("colors.paper"), padding: [12, 14], borderRadius: 4 }}>
           <Text style={{ apply: ["label"] }}>Tenant</Text>
           <Text style={{ fontWeight: 600 }}>{t.tenant.name}</Text>
           <Text style={{ fontSize: 13 }}>{t.tenant.employer}</Text>
         </Column>
-        <Column style={{ flex: 1, gap: 2, backgroundColor: token("colors.tint"), padding: [12, 14], borderRadius: 4 }}>
+        <Column style={{ flex: 1, gap: 2, backgroundColor: token("colors.paper"), padding: [12, 14], borderRadius: 4 }}>
           <Text style={{ apply: ["label"] }}>Landlord</Text>
           <Text style={{ fontWeight: 600 }}>{t.landlord.name}</Text>
           <Text style={{ fontSize: 13 }}>PAN {t.landlord.pan}</Text>
         </Column>
-        <Column style={{ flex: 1.3, gap: 2, backgroundColor: token("colors.tint"), padding: [12, 14], borderRadius: 4 }}>
+        <Column style={{ flex: 1.3, gap: 2, backgroundColor: token("colors.paper"), padding: [12, 14], borderRadius: 4 }}>
           <Text style={{ apply: ["label"] }}>Rented premises</Text>
           <Text style={{ fontSize: 13 }}>{t.property.line1}, {t.property.line2}, {t.property.city} {t.property.pin}</Text>
         </Column>
       </Row>
 
       <Table style={{ cellPadding: [7, 8], rowBorder: { width: 1, style: "solid", color: token("colors.rule") }, fontSize: 13 }}>
-        <TableRow header style={{ backgroundColor: token("colors.tint") }}>
+        <TableRow header style={{ backgroundColor: token("colors.paper") }}>
           <TableCell>Month</TableCell>
           <TableCell>Receipt</TableCell>
           <TableCell>Paid on</TableCell>
@@ -69,7 +69,7 @@ export default function AnnualStatement({ t = defaultTenancy }: { t?: Tenancy })
         In words: <Span style={{ fontFamily: token("fonts.hand"), color: token("colors.ink"), fontSize: 15 }}>Rupees {inWords(totalPaid(t))} only</Span>
       </Text>
 
-      <Column style={{ gap: 6, border: { left: { width: 3, style: "solid", color: token("colors.ink") } }, padding: [4, 0, 4, 12] }}>
+      <Column style={{ gap: 6, border: { left: { width: 3, style: "solid", color: token("colors.print") } }, padding: [4, 0, 4, 12] }}>
         <Text style={{ fontSize: 13 }}>
           {panRequired(t)
             ? `Rent for the full year is ${rupees(annualRent(t))}, above ₹1,00,000, so the landlord's PAN is given above as the income-tax rules for HRA require.`

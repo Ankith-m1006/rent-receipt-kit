@@ -4,18 +4,23 @@ import { defineTheme } from "@hyper-elements/react";
 // the landlord's entries in blue ballpoint, a red serial number, faint blue rules.
 export const receiptBook = defineTheme({
   colors: {
-    background: "#E9EDF4",
+    background: "#EFECEE",
     foreground: "#2B2F3A",
-    paper: "#FFFFFF",
-    ink: "#2340A0",
-    serial: "#C2362B",
-    rule: "#C7D0E2",
-    muted: "#6B7385",
-    border: "#C7D0E2",
-    primary: "#2340A0",
+    desk: "#2A2D36",
+    paper: "#FCEAEC",
+    print: "#9E1C33",
+    serial: "#D7192F",
+    label: "#8A3A48",
+    ink: "#1F3FA6",
+    stamp: "#6A3BA8",
+    rule: "#E5A9B3",
+    muted: "#6B6870",
+    border: "#E5A9B3",
+    primary: "#9E1C33",
     primaryForeground: "#FFFFFF",
-    tint: "#F3F6FB",
+    tint: "#FFFFFF",
   },
+
   fonts: {
     body: "Hind, 'Segoe UI', Arial, sans-serif",
     heading: "Hind, 'Segoe UI', Arial, sans-serif",
@@ -25,12 +30,12 @@ export const receiptBook = defineTheme({
   lineHeights: { body: 1.5 },
   elements: {
     Heading: { by: { level: { 1: { fontSize: 26, fontWeight: 700 }, 2: { fontSize: 19, fontWeight: 600 } } } },
-    Button: { borderRadius: 6, padding: [12, 22], fontWeight: 600, hover: { backgroundColor: "#1A3080" } },
+    Button: { borderRadius: 6, padding: [12, 22], fontWeight: 600, hover: { backgroundColor: "#7E1427" } },
   },
   styles: {
     paper: { backgroundColor: "{colors.paper}", border: { width: 1, style: "solid", color: "{colors.rule}" }, borderRadius: 4 },
     hand: { fontFamily: "{fonts.hand}", color: "{colors.ink}" },
-    label: { fontSize: 13, color: "{colors.muted}" },
+    label: { fontSize: 13, color: "{colors.label}" },
   },
 });
 
